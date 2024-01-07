@@ -1,5 +1,7 @@
 import random
 
+canEat = "今晚吃夜宵喵~"
+canNotEat = "今晚不吃夜宵喵~"
 
 def getRandomNumber():
     return random.randint(0, 1)
@@ -14,9 +16,9 @@ def checkNumber(number):
 
 def printResult(result):
     if result == True:
-        print("\u001b[32m 今晚吃夜宵喵~ \u001b[0m")
+        print(f"\u001b[32m {canEat} \u001b[0m")
     elif result == False:
-        print("\u001b[31m 今晚不吃夜宵喵~ \u001b[0m")
+        print(f"\u001b[31m {canNotEat} \u001b[0m")
 
 
 def run():
