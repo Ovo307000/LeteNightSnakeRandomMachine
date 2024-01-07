@@ -1,4 +1,5 @@
 import random
+import os
 
 # 简易字符池
 canEat = "今晚吃夜宵喵~"
@@ -33,3 +34,4 @@ def run():
 # 程序入口，调用run函数
 if __name__ == '__main__':
     run()
+    os.system("pause")
