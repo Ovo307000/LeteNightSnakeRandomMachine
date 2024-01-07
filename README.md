@@ -1,0 +1,2 @@
+# LeteNightSnakeRandomMachine
+ 一个随机决定是否来一个夜宵的小程序
