@@ -16,16 +16,19 @@ class NightSnake:
     def getRandomStatement(self):
         return random.choice(self.nightSnakeStatement)
 
+    def colorCheck(self, statement):
+        if statement == self.nightSnakeStatement[0]:
+            return "\u001b[32m" + statement + "\u001b[0m"
+
+        elif statement == self.nightSnakeStatement[1]:
+            return "\u001b[31m" + statement + "\u001b[0m"
+
     def printStatement(self):
         result = self.getRandomStatement()
 
-        if result == self.nightSnakeStatement[0]:
-            print("\u001b[32m" + result + "\u001b[0m")
-
-        elif result == self.nightSnakeStatement[1]:
-            print("\u001b[31m" + result + "\u001b[0m")
+        print(self.colorCheck(result))
 
 
-if (__name__ == '__main__'):
+if __name__ == '__main__':
     NightSnake().printStatement()
     os.system("pause")
