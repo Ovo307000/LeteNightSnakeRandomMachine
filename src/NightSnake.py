@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Build: python 3.12.0
 
 import random
 import os
