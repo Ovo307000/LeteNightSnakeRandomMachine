@@ -1,26 +1,23 @@
 # -*- coding: utf-8 -*-
 
 import random
-import os
 
 
 class NightSnake:
 
     def __init__(self):
-        self.nightSnakeStatement = [
-            "今晚吃夜宵喵~",
-            "今晚不吃夜宵喵~"
-        ]
+        self.nightSnakeStatement = {
+            "今晚吃夜宵喵~": "\u001b[32m",
+            "今晚不吃夜宵喵~": "\u001b[31m"
+        }
+
+        self.colorReset = "\u001b[0m"
 
     def getRandomStatement(self):
-        return random.choice(self.nightSnakeStatement)
+        return random.choice(list(self.nightSnakeStatement.keys()))
 
     def colorCheck(self, statement):
-        if statement == self.nightSnakeStatement[0]:
-            return "\u001b[32m" + statement + "\u001b[0m"
-
-        elif statement == self.nightSnakeStatement[1]:
-            return "\u001b[31m" + statement + "\u001b[0m"
+        return self.nightSnakeStatement[statement] + statement + self.colorReset
 
     def printStatement(self):
         result = self.getRandomStatement()
@@ -30,4 +27,5 @@ class NightSnake:
 
 if __name__ == '__main__':
     NightSnake().printStatement()
-    os.system("pause")
+
+    input("Press Enter to continue...")
