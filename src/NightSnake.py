@@ -6,8 +6,6 @@ import os
 
 
 class Tools:
-    GenshinFilePath = '"G:\\Genshin Impact\\Genshin Impact Game\\YuanShen.exe"'
-
     @staticmethod
     def resetColor():
         return "\u001b[0m"
@@ -24,10 +22,32 @@ class Tools:
             os.system('clear')
 
     @staticmethod
-    def GenshinImpartStart():
+    def GenshinImpartStart(path):
         print("原神! 启动!")
 
-        os.system(Tools.GenshinFilePath)
+        os.system(path)
+
+    @staticmethod
+    def getAvailableDrives():
+        return [chr(x) + ":" for x in range(65, 91) if os.path.exists(chr(x) + ":")]
+
+    @staticmethod
+    def findFile(fileName, simplePath):
+        for root, dirs, files in os.walk(simplePath + "\\"):
+            if fileName in files:
+                return os.path.join(root, fileName)
+        return None
+
+    @staticmethod
+    def getGenshinImpartPath():
+        fileName = "YuanShen.exe"
+
+        for path in Tools.getAvailableDrives():
+            filePath = Tools.findFile(fileName, path)
+            if filePath:
+                # \033 为 \ 字符的转义字符
+                return filePath.replace("\\", "\\\\")
+        return None
 
 
 class NightSnake:
@@ -69,46 +89,41 @@ class NightSnake:
     def cannotEat(self):
         print(self.getStatementColor(self.cannotEatStr) + self.cannotEatStr + self.colorReset)
 
-        Tools.GenshinImpartStart()
+        Tools.GenshinImpartStart(f"\"{Tools.getGenshinImpartPath()}\"")
 
 
 class Cheat:
     def __init__(self):
         self.nightSnake = NightSnake()
 
-    def alwaysEat(self):
+    @staticmethod
+    def alwaysEat():
         NightSnake().canEat()
 
-    def neverEat(self):
+    @staticmethod
+    def neverEat():
         NightSnake().cannotEat()
 
-    def menuChoice(self):
+    @staticmethod
+    def menuChoice():
+        print("  Cheat Menu")
         print("1. Always Eat")
         print("2. Never Eat")
 
-        try:
-            choose = input("Enter your choice: ")
-        except ValueError:
-            print("Invalid input")
-            Tools().clearScreen()
-            self.menuChoice()
+        menu = {"1": NightSnake().canEat, "2": NightSnake().cannotEat}
 
-        if choose == "1":
-            Tools().clearScreen()
-            print(self.alwaysEat())
-            Tools().exitWait()
+        while True:
+            choice = input("Enter your choice: ")
 
-        elif choose == "2":
-            Tools().clearScreen()
-
-            print(self.neverEat())
-            Tools().GenshinImpartStart()
-
-            Tools().exitWait()
+            if choice in menu:
+                menu[choice]()
+                break
+            else:
+                print("\u001b[31m" + "Invalid choice! Please enter again." + "\u001b[0m")
 
 
 if __name__ == '__main__':
-    print("NightSnake Version 1.2.0")
+    print("NightSnake Version 1.2.3")
 
     if "--cheat" in sys.argv:
         Cheat().menuChoice()
