@@ -23,9 +23,8 @@ class Tools:
 
     @staticmethod
     def GenshinImpartStart(path):
-        print("原神! 启动!")
-
         os.system(path)
+        print("原神! 启动!")
 
     @staticmethod
     def getAvailableDrives():
@@ -123,7 +122,7 @@ class Cheat:
 
 
 if __name__ == '__main__':
-    print("NightSnake Version 1.2.3")
+    print("NightSnake Version 1.3.0")
 
     if "--cheat" in sys.argv:
         Cheat().menuChoice()
