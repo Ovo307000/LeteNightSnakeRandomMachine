@@ -23,6 +23,10 @@ class Tools:
 
     @staticmethod
     def GenshinImpartStart(path):
+        if not path:
+            print("什么？你居然不玩原神？")
+            return
+
         os.system(path)
         print("原神! 启动!")
 
@@ -122,7 +126,7 @@ class Cheat:
 
 
 if __name__ == '__main__':
-    print("NightSnake Version 1.3.0")
+    print("NightSnake Version 1.3.0.1")
 
     if "--cheat" in sys.argv:
         Cheat().menuChoice()
