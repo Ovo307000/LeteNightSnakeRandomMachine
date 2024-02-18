@@ -33,8 +33,6 @@ def printStatement():
     if statementCheck(result):
         canEat()
     else:
-        if Setting.currentConfig["GenshinImpactStart"]:
-
         cannotEat()
 
 
@@ -43,4 +41,7 @@ def canEat():
 
 
 def cannotEat():
+    if Setting.currentConfig["GenshinImpactStart"]:
+        Tools.GenshinImpartStart(Tools.getGenshinImpartPath())
+
     print(getStatementColor(cannotEatStr) + cannotEatStr + Tools.resetColor())

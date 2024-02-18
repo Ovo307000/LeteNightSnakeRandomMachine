@@ -1,4 +1,5 @@
 import os
+import Setting
 
 
 def resetColor():
@@ -52,3 +53,10 @@ def getGenshinImpartPath():
             if filePath:
                 return filePath.replace("\\", "\\\\")
     return None
+
+
+def systemCheck():
+    if os.name == "nt":
+        return Setting.getCurrentConfig().get("Windows")
+    else:
+        return Setting.getCurrentConfig().get("otherOS")

@@ -10,6 +10,8 @@ defaultConfig = {
     "GenshinImpactPath": None,
     "GenshinImpactStart": False,
     "openCheat": False,
+    "WindowsName": "Windows",
+    "otherOS": "Gnu/Linux or MacOS",
 
     "Statement": {
         "canEatSnake": [
@@ -26,21 +28,38 @@ defaultConfig = {
 currentConfig = defaultConfig
 
 
-def getConfig():
+def getCurrentConfig():
+    if not os.path.exists(getConfigPath()):
+        writeConfig(defaultConfig, getConfigPath())
+    return readConfig(getConfigPath())
+
+
+def getDefaultConfig():
     return defaultConfig
 
 
 def getConfigPath():
-    configName = currentConfig["configName"]
-    configFolderName = currentConfig["configFolderName"]
-    configPath = currentConfig["configPath"]
-
-    return os.path.join(configPath, configFolderName, configName)
+    return os.path.join(getDefaultConfig()["configPath"], getDefaultConfig()["configName"])
 
 
-def writeConfig(configName, path):
+def getConfigLocation():
+    return os.path.join(getDefaultConfig()["configPath"], getDefaultConfig()["configFolderName"],
+                        getDefaultConfig()["configName"])
+
+
+def getConfigFolderLocation():
+    return os.path.join(getDefaultConfig()["configPath"], getDefaultConfig()["configFolderName"])
+
+
+def writeConfig(config, path):
+    if not os.path.exists(path):
+        makeConfigFolder()
+
+    if not config:
+        config = getDefaultConfig()
+
     with open(path, "w") as f:
-        f.write(json.dumps(configName, indent=2))
+        f.write(json.dumps(config, indent=2))
 
 
 def readConfig(path):
@@ -48,24 +67,37 @@ def readConfig(path):
         return json.loads(f.read())
 
 
-def refactorConfig(config):
-    for key in defaultConfig:
-        if key not in config:
-            config[key] = defaultConfig[key]
+def fixConfig(config):
+    fixed = {
+        "count": 0,
+        "config": config
+    }
 
-    with open(getConfigPath(), "w") as f:
-        f.write(json.dumps(config, indent=2))
+    for key, value in getDefaultConfig().items():
+        if not getCurrentConfig().get(key):
+            config[key] = value
+
+            fixed["count"] += 1
+
+    writeConfig(config, getConfigPath())
+
+    return fixed
+
+
+def resetConfig():
+    writeConfig(getDefaultConfig(), getConfigLocation())
 
 
 def makeConfigFolder():
-    folderPath = os.path.join(currentConfig["configPath"], currentConfig["ConfigFolderName"])
-
+    folderPath = getConfigFolderLocation()
     if not os.path.exists(folderPath):
         os.makedirs(folderPath)
 
 
 def toWindowsPath(path):
-    return path.replace("\\", "\\\\")
+    return path.replace("/", "\\")
 
-if '__main__' == __name__:
-    print(toWindowsPath(getConfigPath()))
+
+if __name__ == "__main__":
+    resetConfig()
+    print(getCurrentConfig())
