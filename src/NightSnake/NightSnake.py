@@ -1,6 +1,6 @@
 import random
 
-from src.NightSnake import Tools
+from src.NightSnake import Tools, Setting
 
 canEatStr = "今晚吃夜宵喵~"
 cannotEatStr = "今晚不吃夜宵喵~"
@@ -33,6 +33,8 @@ def printStatement():
     if statementCheck(result):
         canEat()
     else:
+        if Setting.currentConfig["GenshinImpactStart"]:
+
         cannotEat()
 
 
@@ -42,5 +44,3 @@ def canEat():
 
 def cannotEat():
     print(getStatementColor(cannotEatStr) + cannotEatStr + Tools.resetColor())
-
-    Tools.GenshinImpartStart(f"\"{Tools.getGenshinImpartPath()}\"")
