@@ -12,6 +12,8 @@ if __name__ == '__main__':
                           f"If you want to change the config, find at {Setting.Config().config_file_path}",
                             0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
 
+    Tools.get_GenshinImpart_path()
+
     # 打印语句
     NightSnack.print_statement()
     # 退出前等待，防止程序执行完毕后直接退出

@@ -91,18 +91,14 @@ def get_GenshinImpart_path():
             for name in fileName:
                 # 如果文件夹下有指定文件
                 if name in files:
-                    # 输出找到的文件路径
-                    with Color() as color:
-                        color.cprint(f"Find ", "GREEN", "BOLD")
-                        color.rainbow_sin(f"{name}", 0.1, 0, 2, 4)
-                        color.cprint(f" in ", "GREEN", "BOLD")
-                        color.rainbow_sin(f"{path}", 0.1, 6, 8, 10)
-                        color.cprint(f"!", "GREEN", "BOLD")
-                    # 返回文件路径
                     # os.path.join(root, name) 为拼接路径
                     filePath = os.path.join(root, name)
                     # 修改配置文件中的GenshinImpactPath键的值，方便下次启动
                     Setting.Config().change_config(key="GenshinImpactPath", value=filePath)
+                    # 输出找到文件的信息
+                    with Color() as color:
+                        color.rainbow_sin(f"Find {fileName} in {filePath}!", 0.1, 0, 2, 4)
+
                     # 从配置文件中获取GenshinImpactPath键的值并返回
                     return Setting.Config().get_default_config()["GenshinImpactPath"]
         # 如果未找到指定文件，输出未找到文件的信息
