@@ -2,6 +2,7 @@ import random
 
 import Setting
 import Tools
+from Console import Color
 
 
 # 随机获取一条语句
@@ -43,15 +44,15 @@ def print_statement():
 # 可以吃夜宵
 def can_eat():
     # 打印可以吃夜宵的语句
-    print(Setting.Config().get_default_config().get("statement").get("canEatSnake")["color"] +
-          Setting.Config().get_default_config().get("statement").get("canEatSnake")["string"] + Tools.reset_color())
+    print(f"{Setting.Config().get_local_config().get('statement').get('canEatSnake')['color']}{Setting.Config().get_local_config().get('statement').get('canEatSnake')['string']}{Color().reset}")
+
+
 
 
 # 不可以吃夜宵
 def cannot_eat():
     # 打印不可以吃夜宵的语句
-    print(Setting.Config().get_default_config().get("statement").get("cannotEatSnake")["color"] +
-          Setting.Config().get_default_config().get("statement").get("cannotEatSnake")["string"] + Tools.reset_color())
+    print(f"{Setting.Config().get_local_config().get('statement').get('cannotEatSnake')['color']}{Setting.Config().get_local_config().get('statement').get('cannotEatSnake')['string']}{Color().reset}")
 
     # 如果配置文件中的openCheat为True
     if Setting.Config().get_default_config()["GenshinImpactStart"]:

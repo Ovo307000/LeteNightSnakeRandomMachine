@@ -1,5 +1,6 @@
 import os
 import json
+from Console import Color
 
 
 class Config:
@@ -19,11 +20,11 @@ class Config:
             # 暂无引用
             "GenshinImpactPath": None,
             # 是否启动原神
-            "GenshinImpactStart": False,
+            "GenshinImpactStart": True,
             # 是否打开国服原神官网
-            "openGenshinImpactUrl": False,
+            "openGenshinImpactUrl": True,
             # 是否打开云原神官网
-            "openCloudGenshinImpactUrl": False,
+            "openCloudGenshinImpactUrl": True,
             # 国服原神官网
             "GenshinImpactUrl": "https://ys.mihoyo.com/",
             # 云原神官网
@@ -140,12 +141,14 @@ class Config:
                 # 若本地配置文件版本键与默认配置文件版本键不同则重置版本键
                 if local_config.get("version") != self.config.get("version"):
                     # 输出版本不匹配的信息
-                    print("Config version is not match, reset the config version...")
+                    with Color() as color:
+                        color.cprint("Config version is not match, reset the config...", "RED", "BOLD")
                     # 重置版本键
                     self.update_config(key="version", value=self.config.get("version"))
         # 若json文件损坏则重置配置文件
         except json.JSONDecodeError:
-            print("Config file is broken, reset the config...")
+            with Color() as color:
+                color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
             self.reset_config()
 
     # 检查作弊配置
@@ -156,9 +159,9 @@ class Config:
         # 如果总是吃夜宵和总是不吃夜宵同时为True
         if local_config.get("openCheat").get("alwaysEat") and local_config.get("openCheat").get("neverEat"):
             # 输出错误信息
-            print("You can't set alwaysEat and neverEat to True at the same time")
-            print("Reset the cheat config to false...")
 
+            with Color() as color:
+                color.cprint("AlwaysEat and NeverEat are both True, reset the cheat config to false...", "RED", "BOLD")
             # 重置作弊配置为False
             local_config["openCheat"]["alwaysEat"] = False
             local_config["openCheat"]["neverEat"] = False
@@ -177,14 +180,18 @@ class Config:
                 # 若默认配置文件的键不在本地配置文件中则添加键和值到本地配置文件
                 if key not in local_config:
                     # 输出未找到的键
-                    print(f"Config key {key} is not found, add the key to the config...")
+                    with Color() as color:
+                        color.cprint(f"Key: ", "YELLOW", "BOLD")
+                        color.rainbow_sin(f"{key}", 0.1, 64, 64, 64)
+                        color.cprint(f" not found, add to the config...", "YELLOW", "BOLD")
                     # 添加键和值到本地配置文件
                     local_config[key] = value
             # 保存本地配置文件
             self.save_config(local_config)
         # 若json文件损坏则重置配置文件
         except json.JSONDecodeError:
-            print("Config file is broken, reset the config...")
+            with Color() as color:
+                color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
             self.reset_config()
 
     # 获取默认配置文件
@@ -199,19 +206,20 @@ class Config:
                 return json.load(f)
         # 若json文件损坏则恢复默认配置并返回默认配置
         except json.JSONDecodeError:
-            print("Config file is broken, reset the config...")
+            with Color() as color:
+                color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
             self.reset_config()
             return self.get_default_config()
         # 若json文件丢失则恢复默认配置并返回默认配置
         except FileNotFoundError:
-            print("Config file is missing, reset the config...")
+            with Color() as color:
+                color.cprint("Config file is missing, reset the config...", "RED", "BOLD")
             self.reset_config()
             return self.get_default_config()
 
 
 # 测试
 if __name__ == '__main__':
-
     config = Config()
     print(config.get_default_config())
     print(config.get_local_config())

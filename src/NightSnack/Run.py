@@ -1,14 +1,16 @@
 from NightSnack import Tools, Setting
+from Console import Color
+import random
 import NightSnack
 
 # 如果当前文件为主文件
 if __name__ == '__main__':
     # 打印当前版本
-    print(f"Local version = {Setting.Config().get_default_config()["version"]}")
-    # 打印配置文件路径与提示
-    print(f"If you want to change the config, please edit the config file in {Setting.Config().config_folder_path}")
 
-    print(f"\n 夜宵时间到！")
+    with Color() as color:
+        color.rainbow_sin(f"Local version = {Setting.Config().get_default_config()['version']}\n"
+                          f"If you want to change the config, find at {Setting.Config().config_file_path}",
+                            0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
 
     # 打印语句
     NightSnack.print_statement()

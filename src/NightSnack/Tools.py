@@ -3,6 +3,7 @@ import subprocess
 import webbrowser
 import Setting
 
+from Console import Color
 from tqdm import tqdm
 
 
@@ -20,14 +21,15 @@ def exit_wait():
 def GenshinImpart_start():
     config = Setting.Config().get_default_config()
     # 重试次数
-    for _ in range(1):
+    for _ in range(2):
         # 如果找到原神路径
         if config["GenshinImpactPath"]:
-            print("原神！！！启动！！！")
+            with Color() as color:
+                color.rainbow_sin(f"原神！！！启动！！！", 0.1, 0, 2, 4)
             # 使用subprocess启动原神，shell参数为True，则使用shell启动
             subprocess.Popen(config["GenshinImpactPath"], shell=True)
             # 退出当前循环
-            break
+            return
         # 如果未找到原神路径
         else:
             # 获取原神路径
@@ -39,7 +41,8 @@ def GenshinImpart_start():
 def start_cloud_GenshinImpart():
     # 如果配置文件中的openCloudGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
-        print("云原神！！！启动！！！")
+        with Color() as color:
+            color.rainbow_sin(f"云原神！！！启动！！！", 0.1, 0, 2, 4)
         # 打开云原神官网
         open_url(Setting.Config().get_default_config().get("cloudGenshinImpactUrl"))
 
@@ -48,7 +51,8 @@ def start_cloud_GenshinImpart():
 def open_GenshinImpact_web_page():
     # 如果配置文件中的openGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
-        print("原神官网！！！启动！！！")
+        with Color() as color:
+            color.rainbow_sin(f"原神官网！！！启动！！！", 0.1, 0, 2, 4)
         # 打开原神官网
         open_url(Setting.Config().get_default_config().get("GenshinImpactUrl"))
 
@@ -88,7 +92,12 @@ def get_GenshinImpart_path():
                 # 如果文件夹下有指定文件
                 if name in files:
                     # 输出找到的文件路径
-                    print(f"Found {name} in {root}!")
+                    with Color() as color:
+                        color.cprint(f"Find ", "GREEN", "BOLD")
+                        color.rainbow_sin(f"{name}", 0.1, 0, 2, 4)
+                        color.cprint(f" in ", "GREEN", "BOLD")
+                        color.rainbow_sin(f"{path}", 0.1, 6, 8, 10)
+                        color.cprint(f"!", "GREEN", "BOLD")
                     # 返回文件路径
                     # os.path.join(root, name) 为拼接路径
                     filePath = os.path.join(root, name)
@@ -97,6 +106,7 @@ def get_GenshinImpart_path():
                     # 从配置文件中获取GenshinImpactPath键的值并返回
                     return Setting.Config().get_default_config()["GenshinImpactPath"]
         # 如果未找到指定文件，输出未找到文件的信息
-        print(f"\nNot found {fileName} in {path}... \nSearching next drive...")
+        with Color() as color:
+            color.cprint(f"Can't find {fileName} in {path}!", "RED", "BOLD")
     # 返回None
     return None
