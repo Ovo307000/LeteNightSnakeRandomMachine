@@ -20,11 +20,11 @@ class Config:
             # 暂无引用
             "GenshinImpactPath": None,
             # 是否启动原神
-            "GenshinImpactStart": True,
+            "GenshinImpactStart": False,
             # 是否打开国服原神官网
-            "openGenshinImpactUrl": True,
+            "openGenshinImpactUrl": False,
             # 是否打开云原神官网
-            "openCloudGenshinImpactUrl": True,
+            "openCloudGenshinImpactUrl": False,
             # 国服原神官网
             "GenshinImpactUrl": "https://ys.mihoyo.com/",
             # 云原神官网
