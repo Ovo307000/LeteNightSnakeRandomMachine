@@ -29,6 +29,8 @@ class Config:
             "GenshinImpactUrl": "https://ys.mihoyo.com/",
             # 云原神官网
             "cloudGenshinImpactUrl": "https://ys.mihoyo.com/cloud/?utm_source=default#/",
+            # 启动次数
+            "startTimes": 0,
 
             # 作者信息
             "Author": ["Copilot", "ChatGpt", "Ovo307000"],
@@ -109,19 +111,9 @@ class Config:
         with open(self.config_file_path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2)
 
-    # 修改配置文件
-    #   key: 需要修改的配置文件的键
-    # value: 需要修改的配置文件的值
-    def change_config(self, key, value):
-        local_config = self.get_default_config()
-        # 将指定键的值修改为指定值
-        local_config[key] = value
-
-        self.save_config(local_config)
-
     # 更新配置文件
     def update_config(self, key, value):
-        local_config = self.get_default_config()
+        local_config = self.get_local_config()
 
         local_config[key] = value
         self.save_config(local_config)
@@ -196,6 +188,7 @@ class Config:
 
     # 获取默认配置文件
     def get_default_config(self):
+        self.update_config("startTimes", self.get_local_config().get("startTimes") + 1)
         return self.config
 
     # 获取本地配置文件
@@ -223,7 +216,6 @@ if __name__ == '__main__':
     config = Config()
     print(config.get_default_config())
     print(config.get_local_config())
-    config.change_config("GenshinImpactPath", "test")
     print(config.get_local_config())
     config.reset_config()
     print(config.get_local_config())
