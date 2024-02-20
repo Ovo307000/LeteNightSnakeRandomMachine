@@ -24,18 +24,22 @@ def GenshinImpart_start():
     # 重试次数
     for _ in range(2):
         # 如果找到原神路径
-        if config["GenshinImpactPath"]:
+        if os.path.exists(config["GenshinImpactPath"]):
             with Color() as color:
-                color.rainbow_sin(f"原神！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
+                color.rainbow_sin(f"原神！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255),
+                                  random.randint(64, 255))
             # 使用subprocess启动原神，shell参数为True，则使用shell启动
             subprocess.Popen(config["GenshinImpactPath"], shell=True)
             # 退出当前循环
             return
         # 如果未找到原神路径
         else:
+            # 输出未找到文件的信息
+            with Color() as color:
+                color.cprint(f"File name is not found, start searching game path...", "RED", "BOLD")
             # 获取原神路径
             config["GenshinImpactPath"] = get_GenshinImpart_path()
-            Setting.Config().change_config(key="GenshinImpactPath", value=config["GenshinImpactPath"])
+            Setting.Config().update_config(key="GenshinImpactPath", value=config["GenshinImpactPath"])
 
 
 # 启动云原神
@@ -43,7 +47,8 @@ def start_cloud_GenshinImpart():
     # 如果配置文件中的openCloudGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
         with Color() as color:
-            color.rainbow_sin(f"云原神！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
+            color.rainbow_sin(f"云原神！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255),
+                              random.randint(64, 255))
         # 打开云原神官网
         open_url(Setting.Config().get_default_config().get("cloudGenshinImpactUrl"))
 
@@ -53,7 +58,8 @@ def open_GenshinImpact_web_page():
     # 如果配置文件中的openGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
         with Color() as color:
-            color.rainbow_sin(f"原神官网！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
+            color.rainbow_sin(f"原神官网！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255),
+                              random.randint(64, 255))
         # 打开原神官网
         open_url(Setting.Config().get_default_config().get("GenshinImpactUrl"))
 
@@ -95,7 +101,7 @@ def get_GenshinImpart_path():
                     # os.path.join(root, name) 为拼接路径
                     filePath = os.path.join(root, name)
                     # 修改配置文件中的GenshinImpactPath键的值，方便下次启动
-                    Setting.Config().change_config(key="GenshinImpactPath", value=filePath)
+                    Setting.Config().update_config(key="GenshinImpactPath", value=filePath)
                     # 输出找到文件的信息
                     with Color() as color:
                         color.rainbow_sin(f"Find {name} in {root}!", 0.1, 0, 2, 4)
