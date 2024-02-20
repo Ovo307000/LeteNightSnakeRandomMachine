@@ -5,14 +5,11 @@ import NightSnack
 
 # 如果当前文件为主文件
 if __name__ == '__main__':
-    # 打印当前版本
-
+    # 使用彩虹颜色打印本地版本与提示信息
     with Color() as color:
         color.rainbow_sin(f"Local version = {Setting.Config().get_default_config()['version']}\n"
                           f"If you want to change the config, find at {Setting.Config().config_file_path}",
                             0.1, random.randint(64, 255), random.randint(64, 255), random.randint(64, 255))
-
-    Tools.get_GenshinImpart_path()
 
     # 打印语句
     NightSnack.print_statement()

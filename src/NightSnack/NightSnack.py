@@ -47,8 +47,6 @@ def can_eat():
     print(f"{Setting.Config().get_local_config().get('statement').get('canEatSnake')['color']}{Setting.Config().get_local_config().get('statement').get('canEatSnake')['string']}{Color().reset}")
 
 
-
-
 # 不可以吃夜宵
 def cannot_eat():
     # 打印不可以吃夜宵的语句
