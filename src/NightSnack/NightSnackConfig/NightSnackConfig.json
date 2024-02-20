@@ -7,6 +7,7 @@
   "GenshinImpactPath": "G:Genshin Impact\\Genshin Impact Game\\YuanShen.exe",
   "GenshinImpactStart": true,
   "openGenshinImpactUrl": true,
+  "openCloudGenshinImpactUrl": true,
   "GenshinImpactUrl": "https://ys.mihoyo.com/",
   "cloudGenshinImpactUrl": "https://ys.mihoyo.com/cloud/?utm_source=default#/",
   "Author": [
@@ -20,7 +21,7 @@
   ],
   "openCheat": {
     "alwaysEat": false,
-    "neverEat": false
+    "neverEat": true
   },
   "statement": {
     "canEatSnake": {
@@ -35,6 +36,5 @@
   "HelpString": {
     "ChangeSetting": "You can Change the Config at L:\\Codes\\Python\\LeteNightSnakeRandomMachine\\src\\NightSnack\\NightSnackConfig\\NightSnackConfig.json",
     "Cheat": "Remember NEVER SET ALL TO TRUE"
-  },
-  "openCloudGenshinImpactUrl": true
+  }
 }
