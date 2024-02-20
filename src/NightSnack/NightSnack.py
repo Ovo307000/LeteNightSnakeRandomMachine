@@ -1,6 +1,6 @@
 import random
 
-from src.NightSnack import Tools, Setting
+import Setting, Tools
 
 
 def get_random_statement():
@@ -41,3 +41,9 @@ def cannot_eat():
 
     if Setting.Config().get_config()["GenshinImpactStart"]:
         Tools.GenshinImpart_start()
+
+    if Setting.Config().get_config()["openGenshinImpactUrl"]:
+        Tools.not_found_GenshinImpact()
+
+    if Setting.Config().get_config()["openCloudGenshinImpactUrl"]:
+        Tools.finding_GenshinImpact()

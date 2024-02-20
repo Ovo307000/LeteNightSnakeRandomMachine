@@ -1,11 +1,14 @@
 {
-  "version": "1.3.1",
+  "version": "1.4.0",
   "configFolderName": "NightSnackConfig",
   "configName": "NightSnackConfig.json",
   "configPath": "L:\\Codes\\Python\\LeteNightSnakeRandomMachine\\src\\NightSnack",
   "YuanShenPath": null,
   "GenshinImpactPath": "G:Genshin Impact\\Genshin Impact Game\\YuanShen.exe",
   "GenshinImpactStart": true,
+  "openGenshinImpactUrl": true,
+  "GenshinImpactUrl": "https://ys.mihoyo.com/",
+  "cloudGenshinImpactUrl": "https://ys.mihoyo.com/cloud/?utm_source=default#/",
   "Author": [
     "Copilot",
     "ChatGpt",
@@ -32,5 +35,6 @@
   "HelpString": {
     "ChangeSetting": "You can Change the Config at L:\\Codes\\Python\\LeteNightSnakeRandomMachine\\src\\NightSnack\\NightSnackConfig\\NightSnackConfig.json",
     "Cheat": "Remember NEVER SET ALL TO TRUE"
-  }
+  },
+  "openCloudGenshinImpactUrl": true
 }
