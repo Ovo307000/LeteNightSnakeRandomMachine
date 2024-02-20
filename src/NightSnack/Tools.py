@@ -23,6 +23,7 @@ def GenshinImpart_start():
     for _ in range(1):
         # 如果找到原神路径
         if config["GenshinImpactPath"]:
+            print("原神！！！启动！！！")
             # 使用subprocess启动原神，shell参数为True，则使用shell启动
             subprocess.Popen(config["GenshinImpactPath"], shell=True)
             # 退出当前循环
@@ -38,8 +39,7 @@ def GenshinImpart_start():
 def start_cloud_GenshinImpart():
     # 如果配置文件中的openCloudGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
-        print("你还没安装原神？")
-        print("没关系！现在玩云原神！")
+        print("云原神！！！启动！！！")
         # 打开云原神官网
         open_url(Setting.Config().get_default_config().get("cloudGenshinImpactUrl"))
 
@@ -48,7 +48,7 @@ def start_cloud_GenshinImpart():
 def open_GenshinImpact_web_page():
     # 如果配置文件中的openGenshinImpactUrl为True
     if Setting.Config().get_default_config()["openGenshinImpactUrl"]:
-        print("什么？你居然不玩原神？")
+        print("原神官网！！！启动！！！")
         # 打开原神官网
         open_url(Setting.Config().get_default_config().get("GenshinImpactUrl"))
 
