@@ -17,11 +17,11 @@
   ],
   "GenshinImpactName": [
     "YuanShen.exe",
-    "GenshinImpact.exe"
+    "GenshinImpact.txt"
   ],
   "openCheat": {
     "alwaysEat": false,
-    "neverEat": true
+    "neverEat": false
   },
   "statement": {
     "canEatSnake": {

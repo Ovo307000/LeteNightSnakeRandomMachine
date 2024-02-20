@@ -92,6 +92,8 @@ class Config:
             self.version_check()
             # 检查并更新配置
             self.check_and_update_config()
+            # 检查作弊配置
+            self.check_cheat_config()
 
             # 读取配置文件并覆盖默认配置
             with open(self.config_file_path, "r", encoding="utf-8") as f:
@@ -145,6 +147,24 @@ class Config:
         except json.JSONDecodeError:
             print("Config file is broken, reset the config...")
             self.reset_config()
+
+    # 检查作弊配置
+    def check_cheat_config(self):
+        # 获取本地配置文件
+        local_config = self.get_local_config()
+
+        # 如果总是吃夜宵和总是不吃夜宵同时为True
+        if local_config.get("openCheat").get("alwaysEat") and local_config.get("openCheat").get("neverEat"):
+            # 输出错误信息
+            print("You can't set alwaysEat and neverEat to True at the same time")
+            print("Reset the cheat config to false...")
+
+            # 重置作弊配置为False
+            local_config["openCheat"]["alwaysEat"] = False
+            local_config["openCheat"]["neverEat"] = False
+
+            # 保存配置文件
+            self.save_config(local_config)
 
     # 检查并更新配置文件
     def check_and_update_config(self):
