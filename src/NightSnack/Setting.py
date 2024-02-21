@@ -8,10 +8,10 @@ class Config:
         self.config = {
             # 版本信息
             "version": "1.4.0",
-            # 配置文件夹名称
-            "configFolderName": "NightSnackConfig",
             # 配置文件名称
             "configName": "NightSnackConfig.json",
+            # 配置文件夹名称
+            "configFolderName": "NightSnackConfig",
             # 配置文件夹路径，默认为当前工作目录
             "configPath": os.getcwd(),
             # 国服原神路径
@@ -83,14 +83,7 @@ class Config:
         self.load_config()
 
     def load_config(self):
-        # 如果配置文件夹不存在则创建
-        if not os.path.exists(self.config_folder_path):
-            os.makedirs(self.config_folder_path)
-        # 如果配置文件不存在则创建
-        if not os.path.exists(self.config_file_path):
-            self.save_config(self.config)
-        # 若配置文件与文件夹都存在则
-        else:
+        try:
             # 检查版本
             self.version_check()
             # 检查并更新配置
@@ -99,28 +92,44 @@ class Config:
             self.check_cheat_config()
             # 检查未使用的配置
             self.check_not_used_config()
-
             # 读取配置文件并覆盖默认配置
             with open(self.config_file_path, "r", encoding="utf-8") as f:
                 self.config = json.load(f)
 
+        except FileNotFoundError:
+            if not os.path.exists(self.config_folder_path):
+                with Color() as color:
+                    color.cprint("Config file folder is missing, reset the config...", "RED", "BOLD")
+                os.makedirs(self.config_folder_path)
+                self.load_config()
+
+            elif not os.path.exists(self.config_file_path):
+                with Color() as color:
+                    color.cprint("Config file is missing, reset the config...", "RED", "BOLD")
+                self.reset_config()
+                self.load_config()
+
+        except json.JSONDecodeError:
+            with Color() as color:
+                color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
+            self.reset_config()
+            self.load_config()
+
     # 保存配置文件
     # config: 需要被保存的配置文件
     def save_config(self, config):
-        # 如果配置文件夹不存在则创建
-        if not os.path.exists(self.config_folder_path):
-            os.makedirs(self.config_folder_path)
         with open(self.config_file_path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2)
 
     # 更新配置文件
     def update_config(self, key, value):
         local_config = self.get_local_config()
-
         local_config[key] = value
+
         self.save_config(local_config)
 
-    def remove_config(self, key):
+    # 删除配置文件
+    def remove_keys(self, key):
         local_config = self.get_local_config()
         local_config.pop(key)
 
@@ -128,7 +137,7 @@ class Config:
 
     # 重置配置文件
     def reset_config(self):
-        self.save_config(self.get_default_config())
+        self.save_config(self.config)
 
     # 检查配置文件版本键是否与默认配置文件版本键相同
     def version_check(self):
@@ -200,7 +209,7 @@ class Config:
                 if key not in self.get_default_config():
                     with Color() as color:
                         color.cprint(f"Key: {key} is not used, remove from the config...", "YELLOW", "BOLD")
-                        self.remove_config(key)
+                        self.remove_keys(key)
         except json.JSONDecodeError:
             with Color() as color:
                 color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
