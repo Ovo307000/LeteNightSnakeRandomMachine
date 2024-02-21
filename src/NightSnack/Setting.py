@@ -97,6 +97,8 @@ class Config:
             self.check_and_update_config()
             # 检查作弊配置
             self.check_cheat_config()
+            # 检查未使用的配置
+            self.check_not_used_config()
 
             # 读取配置文件并覆盖默认配置
             with open(self.config_file_path, "r", encoding="utf-8") as f:
@@ -116,6 +118,12 @@ class Config:
         local_config = self.get_local_config()
 
         local_config[key] = value
+        self.save_config(local_config)
+
+    def remove_config(self, key):
+        local_config = self.get_local_config()
+        local_config.pop(key)
+
         self.save_config(local_config)
 
     # 重置配置文件
@@ -181,6 +189,18 @@ class Config:
             # 保存本地配置文件
             self.save_config(local_config)
         # 若json文件损坏则重置配置文件
+        except json.JSONDecodeError:
+            with Color() as color:
+                color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
+            self.reset_config()
+
+    def check_not_used_config(self):
+        try:
+            for key, value in self.get_local_config().items():
+                if key not in self.get_default_config():
+                    with Color() as color:
+                        color.cprint(f"Key: {key} is not used, remove from the config...", "YELLOW", "BOLD")
+                        self.remove_config(key)
         except json.JSONDecodeError:
             with Color() as color:
                 color.cprint("Config file is broken, reset the config...", "RED", "BOLD")
