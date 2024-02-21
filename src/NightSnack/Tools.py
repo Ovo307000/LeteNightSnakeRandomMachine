@@ -20,26 +20,27 @@ def exit_wait():
 
 # 启动原神
 def GenshinImpart_start():
-    config = Setting.Config().get_default_config()
-    # 重试次数
-    for _ in range(2):
-        # 如果找到原神路径
-        if os.path.exists(config["GenshinImpactPath"]):
+    game_path = Setting.Config().get_local_config().get("GenshinImpactPath")
+
+    if not game_path or not os.path.exists(game_path):
+        with Color() as color:
+            color.cprint(f"Game path not found, start searching game path...", "RED", "BOLD")
+        game_path = get_GenshinImpart_path()
+
+    if game_path and os.path.exists(game_path):
+        try:
             with Color() as color:
                 color.rainbow_sin(f"原神！！！启动！！！", 0.1, random.randint(64, 255), random.randint(64, 255),
                                   random.randint(64, 255))
-            # 使用subprocess启动原神，shell参数为True，则使用shell启动
-            subprocess.Popen(config["GenshinImpactPath"], shell=True)
-            # 退出当前循环
+            subprocess.Popen(game_path, shell=True)
             return
-        # 如果未找到原神路径
-        else:
-            # 输出未找到文件的信息
+
+        except Exception as e:
             with Color() as color:
-                color.cprint(f"File name is not found, start searching game path...", "RED", "BOLD")
-            # 获取原神路径
-            config["GenshinImpactPath"] = get_GenshinImpart_path()
-            Setting.Config().update_config(key="GenshinImpactPath", value=config["GenshinImpactPath"])
+                color.cprint(f"Failed to start the game due to error: {str(e)}", "RED", "BOLD")
+
+    with Color() as color:
+        color.cprint("Failed to start the game after retrying.", "RED", "BOLD")
 
 
 # 启动云原神
